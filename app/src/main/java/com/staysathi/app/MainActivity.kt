@@ -3,26 +3,57 @@ package com.staysathi.app
 import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
 class MainActivity : Activity() {
+
+    private lateinit var webView: WebView
+
     @Suppress("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val webView = WebView(this)
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
+
+        webView = WebView(this)
+
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            allowFileAccess = true
+            allowContentAccess = false
+            mixedContentMode =
+                android.webkit.WebSettings.MIXED_CONTENT_NEVER_ALLOW
+        }
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
+                return request.url.scheme != "file"
+            }
+        }
+
         webView.webChromeClient = WebChromeClient()
-        webView.webViewClient = WebViewClient()
         setContentView(webView)
+
         webView.loadUrl("file:///android_asset/index.html")
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val view = (window.decorView.findViewById(android.R.id.content) as? android.view.ViewGroup)
-            ?.getChildAt(0) as? WebView
-        if (view?.canGoBack() == true) view.goBack() else super.onBackPressed()
+        if (::webView.isInitialized && webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onDestroy() {
+        if (::webView.isInitialized) {
+            webView.destroy()
+        }
+        super.onDestroy()
     }
 }
