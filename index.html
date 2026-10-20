@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#173f35">
+<title>StaySathi — Find your stay</title>
+<style>
+:root{--green:#173f35;--mint:#eaf3ee;--orange:#f2a65a;--ink:#17251f;--muted:#68756f;--line:#e3e9e5;--bg:#f7f9f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1440px;margin:auto;min-height:100vh}
+header{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 4%;gap:18px;position:sticky;top:0;z-index:4}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:850;letter-spacing:-.7px;color:var(--green)}.logo{width:38px;height:38px;background:var(--green);color:white;border-radius:13px;display:grid;place-items:center;font-size:21px}
+nav{display:flex;gap:24px;color:#506159;font-weight:650}nav a{cursor:pointer;text-decoration:none;color:inherit}.actions{display:flex;align-items:center;gap:10px}.lang{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:12px}.signin{background:var(--green);color:white;border:0;border-radius:12px;padding:11px 17px;font-weight:750}
+main{padding:30px 4% 50px}.hero{background:var(--green);color:white;border-radius:26px;padding:34px;display:grid;grid-template-columns:1.15fr .85fr;gap:24px;overflow:hidden;position:relative}
+.eyebrow{font-size:12px;letter-spacing:1.7px;text-transform:uppercase;color:#b9d9c9;font-weight:800}.hero h1{font-size:clamp(32px,4vw,54px);line-height:1.05;letter-spacing:-1.7px;margin:13px 0}.hero p{color:#d6e5dd;max-width:530px;font-size:16px}.hero-art{min-height:210px;display:grid;place-items:center;font-size:120px;position:relative}.sun{position:absolute;width:220px;height:220px;border-radius:50%;background:#f2a65a;right:14%;top:0;opacity:.95}.hotel-emoji{z-index:1;filter:drop-shadow(0 12px 8px #0c2a2244)}
+.searchbox{margin-top:25px;background:#fff;color:var(--ink);border-radius:18px;padding:14px;display:grid;grid-template-columns:1.2fr 1fr 1fr .8fr auto;gap:8px;box-shadow:0 14px 35px #0b201a22}
+.field{padding:7px 12px;border-right:1px solid var(--line);min-width:0}.field label{display:block;font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px}.field input,.field select{border:0;outline:0;background:transparent;width:100%;padding:5px 0;color:var(--ink);font-weight:650;min-width:0}
+.searchbtn{border:0;border-radius:13px;background:var(--orange);color:#302113;font-weight:850;padding:0 20px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:35px 0 17px}.section-head h2{font-size:25px;margin:0;letter-spacing:-.6px}.section-head p{color:var(--muted);margin:5px 0 0}.textbtn{border:0;background:transparent;color:var(--green);font-weight:800}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}.chip{border:1px solid var(--line);background:white;border-radius:99px;padding:9px 15px;color:#52625a;font-weight:650}.chip.active{background:var(--mint);border-color:#b8d4c5;color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.hotel{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .15s,box-shadow .15s}.hotel:hover{transform:translateY(-3px);box-shadow:0 12px 28px #203b2d12}.photo{height:190px;position:relative;display:grid;place-items:center;font-size:76px;background:linear-gradient(135deg,#d9e9df,#a6c6b2)}.photo.p2{background:linear-gradient(135deg,#f2e2cf,#d5b28d)}.photo.p3{background:linear-gradient(135deg,#dce4f1,#9daec9)}.photo.p4{background:linear-gradient(135deg,#d6e7e7,#91b8b3)}.photo.p5{background:linear-gradient(135deg,#f0dbe2,#d3a7b5)}.photo.p6{background:linear-gradient(135deg,#e9e4d4,#b6ad88)}
+.tag{position:absolute;left:13px;top:13px;background:#fff;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:850}.heart{position:absolute;right:13px;top:13px;background:#fff;border:0;border-radius:50%;width:35px;height:35px;font-size:18px}
+.hotelbody{padding:16px}.hotel-top{display:flex;justify-content:space-between;gap:8px}.hotel h3{margin:0;font-size:18px}.rating{background:var(--green);color:white;border-radius:7px;padding:4px 7px;font-size:12px;height:max-content;font-weight:800}.location{color:var(--muted);font-size:13px;margin:7px 0 13px}.amenities{display:flex;gap:7px;flex-wrap:wrap}.amenities span{background:#f2f5f2;border-radius:7px;padding:5px 8px;color:#52625a;font-size:11px}.price-row{display:flex;justify-content:space-between;align-items:end;border-top:1px solid var(--line);margin-top:15px;padding-top:13px}.price{font-size:23px;font-weight:850;letter-spacing:-.6px}.price small{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:0}.book{border:0;background:var(--green);color:white;border-radius:10px;padding:10px 14px;font-weight:800}
+.bottom{margin-top:34px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;justify-content:space-between;gap:18px;align-items:center}.bottom h3{margin:0 0 4px}.bottom p{margin:0;color:var(--muted)}footer{padding:24px 4%;display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:12px}
+.modal{position:fixed;inset:0;background:#10251ed1;z-index:10;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.dialog{background:white;border-radius:22px;max-width:520px;width:100%;padding:25px;max-height:90vh;overflow:auto}.dialog h2{margin-top:0}.close{float:right;border:0;background:#edf2ee;border-radius:50%;width:34px;height:34px;font-size:20px}.notice{background:var(--mint);border-radius:12px;padding:13px;color:var(--green);font-size:13px;margin:15px 0}.dialog label{display:block;margin:13px 0 5px;font-weight:700;font-size:13px}.dialog input,.dialog select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.wide{width:100%;margin-top:14px;padding:13px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#17251f;color:white;padding:12px 18px;border-radius:12px;display:none;z-index:20;box-shadow:0 10px 30px #0003}.toast.show{display:block}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-art{display:none}.searchbox{grid-template-columns:1fr 1fr}.field{border-right:0;border-bottom:1px solid var(--line)}.searchbtn{min-height:48px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}nav{gap:12px}}
+@media(max-width:560px){header{height:64px;padding:0 4%}nav{display:none}.brand{font-size:19px}.lang{padding:8px}.signin{padding:9px 11px}main{padding-top:18px}.hero{padding:23px 18px;border-radius:20px}.hero h1{font-size:35px}.searchbox{grid-template-columns:1fr;padding:10px}.field{padding:8px 10px}.grid{grid-template-columns:1fr}.photo{height:205px}.section-head h2{font-size:22px}.bottom{align-items:flex-start;flex-direction:column}footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><div class="logo">S</div>StaySathi</div>
+  <nav><a onclick="scrollHotels()">Explore stays</a><a onclick="openModal('host')">List your property</a><a onclick="openModal('trips')">My trips</a></nav>
+  <div class="actions"><select class="lang" id="language" aria-label="Language" onchange="setLanguage(this.value)"><option value="en">EN</option><option value="hi">हिंदी</option></select><button class="signin" onclick="openModal('signin')" data-i18n="signin">Sign in</button></div>
+</header>
+<main>
+<section class="hero">
+ <div>
+  <div class="eyebrow" data-i18n="eyebrow">YOUR NEXT STAY STARTS HERE</div>
+  <h1 data-i18n="headline">Find a place<br>that feels like you.</h1>
+  <p data-i18n="subhead">Handpicked stays, honest prices, and a smoother way to travel. Your perfect room is just a few taps away.</p>
+  <div class="searchbox">
+   <div class="field"><label data-i18n="destination">Destination</label><input id="city" value="Lucknow" placeholder="City or hotel"></div>
+   <div class="field"><label data-i18n="checkin">Check-in</label><input id="checkin" type="date"></div>
+   <div class="field"><label data-i18n="checkout">Check-out</label><input id="checkout" type="date"></div>
+   <div class="field"><label data-i18n="guests">Guests</label><select id="guests"><option>1 guest</option><option selected>2 guests</option><option>3 guests</option><option>4 guests</option><option>5+ guests</option></select></div>
+   <button class="searchbtn" onclick="searchHotels()" data-i18n="search">Search stays →</button>
+  </div>
+ </div>
+ <div class="hero-art"><div class="sun"></div><div class="hotel-emoji">🏨</div></div>
+</section>
+<div class="section-head"><div><h2 data-i18n="popular">Stays you’ll love</h2><p data-i18n="popularSub">Comfortable places for every kind of trip</p></div><button class="textbtn" onclick="resetFilters()" data-i18n="viewall">View all ↗</button></div>
+<div class="chips" id="chips">
+ <button class="chip active" data-filter="all" onclick="filterHotels('all',this)" data-i18n="all">All stays</button>
+ <button class="chip" data-filter="budget" onclick="filterHotels('budget',this)" data-i18n="budget">Budget friendly</button>
+ <button class="chip" data-filter="premium" onclick="filterHotels('premium',this)" data-i18n="premium">Premium</button>
+ <button class="chip" data-filter="family" onclick="filterHotels('family',this)" data-i18n="family">Family stays</button>
+ <button class="chip" data-filter="work" onclick="filterHotels('work',this)" data-i18n="work">Work trip</button>
+</div>
+<div class="grid" id="hotelGrid"></div>
+<section class="bottom"><div><h3 data-i18n="hostTitle">Have a place to share?</h3><p data-i18n="hostSub">Welcome guests, manage bookings, and grow your property with StaySathi.</p></div><button class="book" onclick="openModal('host')" data-i18n="hostBtn">Become a host →</button></section>
+</main>
+<footer><span>© 2026 StaySathi · Made for better stays.</span><span>Prototype · Sample listings and prices · Not a live booking service</span></footer>
+</div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="dialog"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const hotels=[
+{id:1,name:"The Fern Residency",city:"Lucknow",area:"Gomti Nagar, Lucknow",price:2499,rating:"4.7",emoji:"🏩",photo:"",tag:"Guest favourite",type:["premium","work"],amenities:["Wi-Fi","Breakfast","AC"],desc:"A polished city stay with thoughtful comfort and easy access to business districts."},
+{id:2,name:"Sukoon Boutique Stay",city:"Lucknow",area:"Hazratganj, Lucknow",price:1499,rating:"4.5",emoji:"🛏️",tag:"Great value",type:["budget","family"],amenities:["Wi-Fi","AC","Parking"],desc:"A warm, welcoming base for exploring the city without stretching your budget."},
+{id:3,name:"The Ivory Grand",city:"Lucknow",area:"Vibhuti Khand, Lucknow",price:3899,rating:"4.8",emoji:"🏨",tag:"Premium pick",type:["premium","family"],amenities:["Pool","Breakfast","Wi-Fi"],desc:"Spacious rooms and elevated comforts for a relaxed getaway."},
+{id:4,name:"Nawab Comfort Inn",city:"Lucknow",area:"Aliganj, Lucknow",price:1199,rating:"4.3",emoji:"🏡",tag:"Budget friendly",type:["budget","work"],amenities:["Wi-Fi","AC","Desk"],desc:"A practical, comfortable stay for quick trips and longer work visits."},
+{id:5,name:"Gulmohar Suites",city:"Lucknow",area:"Indira Nagar, Lucknow",price:2799,rating:"4.6",emoji:"🌿",tag:"Family favourite",type:["family","premium"],amenities:["Kitchenette","Wi-Fi","AC"],desc:"Room to unwind with family-friendly facilities and a calm neighbourhood."},
+{id:6,name:"Metro Nest Hotel",city:"Lucknow",area:"Charbagh, Lucknow",price:999,rating:"4.2",emoji:"🏢",tag:"Near transit",type:["budget","work"],amenities:["Wi-Fi","AC","24×7 desk"],desc:"A simple city stop with convenient access to transport links."}
+];
+const copy={
+en:{signin:"Sign in",eyebrow:"YOUR NEXT STAY STARTS HERE",headline:"Find a place<br>that feels like you.",subhead:"Handpicked stays, honest prices, and a smoother way to travel. Your perfect room is just a few taps away.",destination:"Destination",checkin:"Check-in",checkout:"Check-out",guests:"Guests",search:"Search stays →",popular:"Stays you’ll love",popularSub:"Comfortable places for every kind of trip",viewall:"View all ↗",all:"All stays",budget:"Budget friendly",premium:"Premium",family:"Family stays",work:"Work trip",hostTitle:"Have a place to share?",hostSub:"Welcome guests, manage bookings, and grow your property with StaySathi.",hostBtn:"Become a host →",pernight:"/ night",book:"View stay",guest:"guests",noresults:"No sample stays matched that search. Try Lucknow or clear filters.",amenities:"Sample amenities",reserve:"Request booking",sample:"Demo only: this prototype does not contact a hotel or take payment.",close:"Close",hostHeading:"List your property",hostText:"Start your host enquiry. In the live product, verified property partners will be able to manage rooms, prices and availability.",name:"Your name",phone:"Phone number",property:"Property name",city:"City",send:"Save enquiry (demo)",saved:"Demo enquiry saved on this device.",signinHeading:"Welcome to StaySathi",signinText:"Sign-in and OTP will be connected to the secure backend in the production version.",phoneLabel:"Mobile number",continue:"Continue (demo)",tripsHeading:"My trips",tripsText:"Your booking history will appear here after the live booking backend is connected.",details:"About this stay",checkDates:"Choose check-in and check-out dates to request a booking.",filtered:"Showing sample stays"}
+,hi:{signin:"लॉग इन",eyebrow:"आपका अगला ठिकाना यहीं से",headline:"ऐसी जगह चुनें<br>जो आपकी लगे।",subhead:"चुने हुए स्टे, सही कीमतें और आसान यात्रा। आपका पसंदीदा कमरा बस कुछ टैप दूर है।",destination:"कहाँ जाना है?",checkin:"चेक-इन",checkout:"चेक-आउट",guests:"मेहमान",search:"स्टे खोजें →",popular:"आपके लिए शानदार स्टे",popularSub:"हर तरह की यात्रा के लिए आरामदायक जगहें",viewall:"सभी देखें ↗",all:"सभी स्टे",budget:"कम बजट",premium:"प्रीमियम",family:"परिवार के लिए",work:"काम की यात्रा",hostTitle:"क्या आपके पास प्रॉपर्टी है?",hostSub:"मेहमानों का स्वागत करें और StaySathi के साथ अपनी प्रॉपर्टी बढ़ाएँ।",hostBtn:"होस्ट बनें →",pernight:"/ रात",book:"स्टे देखें",guest:"मेहमान",noresults:"इस खोज में कोई नमूना स्टे नहीं मिला। लखनऊ खोजें या फ़िल्टर हटाएँ।",amenities:"नमूना सुविधाएँ",reserve:"बुकिंग का अनुरोध",sample:"यह केवल डेमो है। इससे होटल से संपर्क या भुगतान नहीं होता।",close:"बंद करें",hostHeading:"अपनी प्रॉपर्टी जोड़ें",hostText:"होस्ट बनने की जानकारी भरें। लाइव संस्करण में सत्यापित होटल पार्टनर कमरे, कीमत और उपलब्धता संभाल सकेंगे।",name:"आपका नाम",phone:"मोबाइल नंबर",property:"प्रॉपर्टी का नाम",city:"शहर",send:"जानकारी सेव करें (डेमो)",saved:"डेमो जानकारी इस डिवाइस पर सेव हुई।",signinHeading:"StaySathi में आपका स्वागत है",signinText:"लाइव ऐप में सुरक्षित लॉगिन और OTP जोड़े जाएँगे।",phoneLabel:"मोबाइल नंबर",continue:"आगे बढ़ें (डेमो)",tripsHeading:"मेरी यात्राएँ",tripsText:"लाइव बुकिंग सिस्टम जुड़ने के बाद आपकी बुकिंग यहाँ दिखेंगी।",details:"इस स्टे के बारे में",checkDates:"बुकिंग अनुरोध के लिए चेक-इन और चेक-आउट तारीख चुनें।",filtered:"नमूना स्टे दिखाए जा रहे हैं"}
+};
+let lang="en", activeFilter="all", searchCity="";
+function t(k){return copy[lang][k]||copy.en[k]||k}
+function setLanguage(v){lang=v;document.documentElement.lang=v;document.querySelectorAll("[data-i18n]").forEach(el=>{let k=el.dataset.i18n;if(copy[lang][k])el.innerHTML=copy[lang][k]});renderHotels()}
+function renderHotels(){
+ let list=hotels.filter(h=>(activeFilter==="all"||h.type.includes(activeFilter))&&(!searchCity||h.city.toLowerCase().includes(searchCity.toLowerCase())||h.area.toLowerCase().includes(searchCity.toLowerCase())||h.name.toLowerCase().includes(searchCity.toLowerCase())));
+ const grid=document.getElementById("hotelGrid");
+ if(!list.length){grid.innerHTML='<div class="notice" style="grid-column:1/-1">'+t("noresults")+'</div>';return}
+ grid.innerHTML=list.map((h,i)=>`<article class="hotel"><div class="photo ${["","p2","p3","p4","p5","p6"][h.id-1]}"><span class="tag">${h.tag}</span><button class="heart" onclick="toggleHeart(this)" aria-label="Save stay">♡</button><span>${h.emoji}</span></div><div class="hotelbody"><div class="hotel-top"><h3>${h.name}</h3><span class="rating">★ ${h.rating}</span></div><div class="location">⌖ ${h.area}</div><div class="amenities">${h.amenities.map(a=>`<span>${a}</span>`).join("")}</div><div class="price-row"><div><div class="price">₹${h.price.toLocaleString("en-IN")} <small>${t("pernight")}</small></div><small style="color:var(--muted)">Taxes may apply</small></div><button class="book" onclick="viewStay(${h.id})">${t("book")}</button></div></div></article>`).join("");
+}
+function filterHotels(f,el){activeFilter=f;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c===el));renderHotels()}
+function resetFilters(){activeFilter="all";searchCity="";document.getElementById("city").value="";document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c.dataset.filter==="all"));renderHotels()}
+function searchHotels(){searchCity=document.getElementById("city").value.trim();renderHotels();document.getElementById("hotelGrid").scrollIntoView({behavior:"smooth",block:"start"});toast(t("filtered"))}
+function scrollHotels(){document.getElementById("hotelGrid").scrollIntoView({behavior:"smooth"})}
+function toggleHeart(b){b.textContent=b.textContent==="♡"?"♥":"♡";b.style.color=b.textContent==="♥"?"#c34b52":"";toast(b.textContent==="♥"?"Saved to favourites":"Removed from favourites")}
+function openModal(type){const content=document.getElementById("modalContent");if(type==="host"){content.innerHTML=`<h2>${t("hostHeading")}</h2><p>${t("hostText")}</p><form onsubmit="saveHost(event)"><label>${t("name")}</label><input required id="hostName" autocomplete="name"><label>${t("phone")}</label><input required id="hostPhone" inputmode="tel" pattern="[0-9+ ()-]{8,16}"><label>${t("property")}</label><input required id="hostProperty"><label>${t("city")}</label><input required id="hostCity" value="Lucknow"><button class="book wide" type="submit">${t("send")}</button></form><div class="notice">${t("sample")}</div>`}
+else if(type==="signin"){content.innerHTML=`<h2>${t("signinHeading")}</h2><p>${t("signinText")}</p><label>${t("phoneLabel")}</label><input id="signinPhone" inputmode="tel" placeholder="+91" pattern="[0-9+ ()-]{8,16}"><button class="book wide" onclick="toast('${t("sample")}')">${t("continue")}</button><div class="notice">${t("sample")}</div>`}
+else {content.innerHTML=`<h2>${t("tripsHeading")}</h2><p>${t("tripsText")}</p><div class="notice">${t("sample")}</div>`}
+document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function viewStay(id){const h=hotels.find(x=>x.id===id);document.getElementById("modalContent").innerHTML=`<h2>${h.name}</h2><p>★ ${h.rating} · ${h.area}</p><p>${h.desc}</p><p><b>${t("amenities")}:</b> ${h.amenities.join(" · ")}</p><div class="price">₹${h.price.toLocaleString("en-IN")} <small>${t("pernight")}</small></div><div class="notice">${t("sample")}</div><button class="book wide" onclick="requestBooking(${h.id})">${t("reserve")}</button>`;document.getElementById("modal").classList.add("show")}
+function requestBooking(id){const ci=document.getElementById("checkin").value,co=document.getElementById("checkout").value;if(!ci||!co||co<=ci){toast(t("checkDates"));return}const h=hotels.find(x=>x.id===id);try{let arr=JSON.parse(localStorage.getItem("staysathi_demo_requests")||"[]");arr.push({hotel:h.name,checkin:ci,checkout:co,guests:document.getElementById("guests").value,created:new Date().toISOString()});localStorage.setItem("staysathi_demo_requests",JSON.stringify(arr))}catch(e){}closeModal();toast(t("sample"))}
+function saveHost(e){e.preventDefault();try{let arr=JSON.parse(localStorage.getItem("staysathi_host_enquiries")||"[]");arr.push({name:hostName.value,phone:hostPhone.value,property:hostProperty.value,city:hostCity.value,created:new Date().toISOString()});localStorage.setItem("staysathi_host_enquiries",JSON.stringify(arr))}catch(e){}closeModal();toast(t("saved"))}
+function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2800)}
+const today=new Date();const plus=n=>{let d=new Date(today);d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};document.getElementById("checkin").value=plus(1);document.getElementById("checkout").value=plus(2);document.getElementById("checkin").min=plus(0);document.getElementById("checkout").min=plus(1);
+renderHotels();
+</script>
+</body></html>
